@@ -158,7 +158,7 @@ function takeSnapshot() {
 
   if (currentMode === 'necklace' && necklaceImg) {
     const chinSmooth = smooth(chinPositions);
-    if (chinSmooth) ctx.drawImage(necklaceImg, chinSmooth.x - 100, chinSmooth.y, 400, 200);
+    if (chinSmooth) ctx.drawImage(necklaceImg, chinSmooth.x - 100, chinSmooth.y, 400, 150);
   }
 
   lastSnapshotDataURL = snapshotCanvas.toDataURL('image/png');
