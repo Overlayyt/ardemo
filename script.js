@@ -38,9 +38,7 @@ function changeNecklace(filename) {
 
 function selectMode(mode) {
   currentMode = mode;
-
   document.querySelectorAll('.options-group').forEach(group => group.style.display = 'none');
-
   if (mode) {
     document.getElementById(`${mode}-options`).style.display = 'flex';
   }
@@ -122,7 +120,17 @@ faceMesh.onResults((results) => {
     }
 
     if (currentMode === 'necklace' && necklaceImg && chinSmooth) {
-      canvasCtx.drawImage(necklaceImg, chinSmooth.x - 100, chinSmooth.y, 300, 150);
+      const displayWidth = 300; // Adjust as needed
+      const aspectRatio = necklaceImg.height / necklaceImg.width;
+      const displayHeight = displayWidth * aspectRatio;
+
+      canvasCtx.drawImage(
+        necklaceImg,
+        chinSmooth.x - displayWidth / 2,
+        chinSmooth.y,
+        displayWidth,
+        displayHeight
+      );
     }
   }
 });
@@ -131,7 +139,7 @@ const camera = new Camera(videoElement, {
   onFrame: async () => {
     await faceMesh.send({ image: videoElement });
   },
-   width: 1280,
+  width: 1280,
   height: 720
 });
 camera.start();
@@ -158,7 +166,19 @@ function takeSnapshot() {
 
   if (currentMode === 'necklace' && necklaceImg) {
     const chinSmooth = smooth(chinPositions);
-    if (chinSmooth) ctx.drawImage(necklaceImg, chinSmooth.x - 100, chinSmooth.y, 400, 150);
+    if (chinSmooth) {
+      const displayWidth = 300;
+      const aspectRatio = necklaceImg.height / necklaceImg.width;
+      const displayHeight = displayWidth * aspectRatio;
+
+      ctx.drawImage(
+        necklaceImg,
+        chinSmooth.x - displayWidth / 2,
+        chinSmooth.y,
+        displayWidth,
+        displayHeight
+      );
+    }
   }
 
   lastSnapshotDataURL = snapshotCanvas.toDataURL('image/png');
@@ -197,10 +217,6 @@ function closeSnapshotModal() {
   document.getElementById('snapshot-modal').style.display = 'none';
 }
 
-function toggleInfoModal() {
-  const modal = document.getElementById('info-modal');
-  modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
-}
 function toggleInfoModal() {
   const modal = document.getElementById('info-modal');
   modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
