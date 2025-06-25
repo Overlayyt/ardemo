@@ -48,7 +48,7 @@ function insertJewelryOptions(type, containerId) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
 
-  for (let i = 1; i <= 12; i++) {
+  for (let i = 1; i <= 10; i++) {
     const filename = `${type}${i}.png`;
     const btn = document.createElement('button');
     const img = document.createElement('img');
